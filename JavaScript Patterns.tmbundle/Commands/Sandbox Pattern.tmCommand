@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>echo "Sandbox() {     
+    var args = Array.prototype.slice.call(arguments),
+    callback = args.pop(),
+    modules = (args[0] &amp;&amp; typeof args[0] === "string") ? args : args[0],         
+    i;
+
+    if (!(this instanceof Sandbox)) { return new Sandbox(modules, callback); }
+    
+    if (!modules || modules === '*') {         
+      modules = [];         
+      for (i in Sandbox.modules) {             
+        if (Sandbox.modules.hasOwnProperty(i)) {                 
+          modules.push(i);             
+        }         
+      }     
+    }
+    
+    for (i = 0; i &lt; modules.length; i += 1) {         
+      Sandbox.modules[modules[i]](this);     
+    }
+    
+    callback(this); 
+};
+
+Sandbox.prototype = {     
+  name: "My Application",     
+  version: "1.0",
+  function () { return this.name; } 
+};"</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Sandbox Pattern</string>
+	<key>output</key>
+	<string>afterSelectedText</string>
+	<key>uuid</key>
+	<string>A1523E6F-9335-417A-9BE0-4C9D97A57BB0</string>
+</dict>
+</plist>
